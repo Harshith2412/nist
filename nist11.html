@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIST Framework</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Icon components (simplified lucide-react replacements)
+        const ChevronDown = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+        );
+        
+        const ChevronRight = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+        );
+        
+        const Shield = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+        );
+        
+        const Eye = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+        );
+        
+        const Bell = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+        );
+        
+        const Zap = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+        );
+        
+        const RefreshCw = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+        );
+
+      const NISTFramework = () => {
+  const [expandedFunctions, setExpandedFunctions] = useState({});
+  const [expandedCategories, setExpandedCategories] = useState({});
+
+  const toggleFunction = (functionId) => {
+    setExpandedFunctions(prev => ({
+      ...prev,
+      [functionId]: !prev[functionId]
+    }));
+  };
+
+  const toggleCategory = (categoryId) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [categoryId]: !prev[categoryId]
+    }));
+  };
+
+  const nistData = {
+    identify: {
+      title: "IDENTIFY",
+      description: "Develop organizational understanding to manage cybersecurity risk",
+      icon: Eye,
+      color: "bg-blue-500",
+      gradient: "from-blue-500 to-blue-600",
+      borderColor: "border-blue-500",
+      categories: [
+        {
+          id: "id-am",
+          name: "Asset Management (ID.AM)",
+          items: [
+            {
+              code: "ID.AM-1",
+              title: "Physical devices and systems inventory",
+              description: "Physical devices and systems within the organization are inventoried and documented. This includes servers, workstations, network devices, IoT devices, and other hardware assets to maintain visibility of the attack surface."
+            },
+            {
+              code: "ID.AM-2",
+              title: "Software platforms and applications inventory",
+              description: "Software platforms and applications within the organization are inventoried and documented. This includes operating systems, applications, firmware, and software components to track software assets and potential vulnerabilities."
+            },
+            {
+              code: "ID.AM-3",
+              title: "Organizational communication and data flows",
+              description: "Organizational communication and data flows are mapped to understand how information moves within and outside the organization. This helps identify critical pathways and potential points of exposure."
+            },
+            {
+              code: "ID.AM-4",
+              title: "External information systems",
+              description: "External information systems are catalogued to understand dependencies and potential risks from third-party services, cloud providers, and partner organizations."
+            },
+            {
+              code: "ID.AM-5",
+              title: "Resources prioritization",
+              description: "Resources (hardware, devices, data, time, personnel) are prioritized based on their classification, criticality, and business value to focus protection efforts effectively."
+            },
+            {
+              code: "ID.AM-6",
+              title: "Cybersecurity roles and responsibilities",
+              description: "Cybersecurity roles and responsibilities for the entire workforce and third-party stakeholders are established to ensure accountability and clear ownership of security tasks."
+            }
+          ]
+        },
+        {
+          id: "id-be",
+          name: "Business Environment (ID.BE)",
+          items: [
+            {
+              code: "ID.BE-1",
+              title: "Organization's role in supply chain",
+              description: "The organization's role in the supply chain is identified and communicated to understand dependencies and potential cascading impacts on customers and partners."
+            },
+            {
+              code: "ID.BE-2",
+              title: "Critical infrastructure placement",
+              description: "The organization's place in critical infrastructure and its industry sector is identified to understand regulatory requirements and national security implications."
+            },
+            {
+              code: "ID.BE-3",
+              title: "Mission, objectives, and activities",
+              description: "Priorities for organizational mission, objectives, and activities are established to align cybersecurity strategy with business goals and risk tolerance."
+            },
+            {
+              code: "ID.BE-4",
+              title: "Dependencies and critical functions",
+              description: "Dependencies and critical functions for delivery of services are established to identify single points of failure and prioritize protection efforts."
+            },
+            {
+              code: "ID.BE-5",
+              title: "Resilience requirements",
+              description: "Resilience requirements to support delivery of critical services are established to ensure business continuity during disruptions."
+            }
+          ]
+        },
+        {
+          id: "id-gv",
+          name: "Governance (ID.GV)",
+          items: [
+            {
+              code: "ID.GV-1",
+              title: "Organizational cybersecurity policy",
+              description: "Organizational cybersecurity policy is established and communicated to provide clear direction and expectations for security practices across the enterprise."
+            },
+            {
+              code: "ID.GV-2",
+              title: "Cybersecurity roles coordination",
+              description: "Cybersecurity roles and responsibilities are coordinated and aligned with internal roles and external partners to ensure comprehensive coverage."
+            },
+            {
+              code: "ID.GV-3",
+              title: "Legal and regulatory requirements",
+              description: "Legal and regulatory requirements regarding cybersecurity are understood and managed, including privacy, data protection, and industry-specific mandates."
+            },
+            {
+              code: "ID.GV-4",
+              title: "Risk management processes",
+              description: "Governance and risk management processes address cybersecurity risks throughout the organization to ensure systematic risk handling."
+            }
+          ]
+        },
+        {
+          id: "id-ra",
+          name: "Risk Assessment (ID.RA)",
+          items: [
+            {
+              code: "ID.RA-1",
+              title: "Asset vulnerabilities identification",
+              description: "Asset vulnerabilities are identified and documented through vulnerability scanning, penetration testing, and security assessments."
+            },
+            {
+              code: "ID.RA-2",
+              title: "Cyber threat intelligence",
+              description: "Cyber threat intelligence is received from information sharing forums and sources to stay informed about emerging threats and attack patterns."
+            },
+            {
+              code: "ID.RA-3",
+              title: "Internal and external threats",
+              description: "Threats, both internal and external, are identified and documented to understand the threat landscape facing the organization."
+            },
+            {
+              code: "ID.RA-4",
+              title: "Business impact assessment",
+              description: "Potential business impacts and likelihoods are identified to prioritize risk treatment and resource allocation decisions."
+            },
+            {
+              code: "ID.RA-5",
+              title: "Risk response integration",
+              description: "Threats, vulnerabilities, likelihoods, and impacts are used to determine and inform risk responses and treatment strategies."
+            },
+            {
+              code: "ID.RA-6",
+              title: "Risk responses identification",
+              description: "Risk responses are identified and prioritized based on organizational risk tolerance and the cost-benefit analysis of controls."
+            }
+          ]
+        },
+        {
+          id: "id-rm",
+          name: "Risk Management Strategy (ID.RM)",
+          items: [
+            {
+              code: "ID.RM-1",
+              title: "Risk management processes",
+              description: "Risk management processes are established, managed, and agreed to by organizational stakeholders to ensure consistent risk handling."
+            },
+            {
+              code: "ID.RM-2",
+              title: "Organizational risk tolerance",
+              description: "Organizational risk tolerance is determined and clearly expressed to guide decision-making about acceptable risk levels."
+            },
+            {
+              code: "ID.RM-3",
+              title: "Risk tolerance and critical infrastructure",
+              description: "The organization's determination of risk tolerance is informed by its role in critical infrastructure and sector-specific risk analysis."
+            }
+          ]
+        },
+        {
+          id: "id-sc",
+          name: "Supply Chain Risk Management (ID.SC)",
+          items: [
+            {
+              code: "ID.SC-1",
+              title: "Supply chain risk management",
+              description: "Cyber supply chain risk management processes are identified, established, assessed, managed, and agreed to by organizational stakeholders."
+            },
+            {
+              code: "ID.SC-2",
+              title: "Suppliers identification and prioritization",
+              description: "Suppliers and third-party partners of information systems, components, and services are identified, prioritized, and assessed using a risk assessment process."
+            },
+            {
+              code: "ID.SC-3",
+              title: "Contracts with security requirements",
+              description: "Contracts with suppliers and third-party partners are used to implement appropriate measures designed to meet the objectives of cybersecurity programs."
+            },
+            {
+              code: "ID.SC-4",
+              title: "Supplier assessment",
+              description: "Suppliers and third-party partners are routinely assessed using audits, test results, or other forms of evaluations to confirm they meet contractual obligations."
+            },
+            {
+              code: "ID.SC-5",
+              title: "Response and recovery planning",
+              description: "Response and recovery planning and testing are conducted with suppliers and third-party providers to ensure coordinated incident management."
+            }
+          ]
+        }
+      ]
+    },
+    protect: {
+      title: "PROTECT",
+      description: "Develop and implement safeguards to ensure delivery of services",
+      icon: Shield,
+      color: "bg-green-500",
+      gradient: "from-green-500 to-green-600",
+      borderColor: "border-green-500",
+      categories: [
+        {
+          id: "pr-ac",
+          name: "Identity Management & Access Control (PR.AC)",
+          items: [
+            {
+              code: "PR.AC-1",
+              title: "Identity and credential management",
+              description: "Identities and credentials are issued, managed, verified, revoked, and audited for authorized devices, users, and processes."
+            },
+            {
+              code: "PR.AC-2",
+              title: "Physical access management",
+              description: "Physical access to assets is managed and protected through security controls such as badges, biometrics, and visitor management."
+            },
+            {
+              code: "PR.AC-3",
+              title: "Remote access management",
+              description: "Remote access is managed using encryption, VPNs, multi-factor authentication, and monitoring to protect against unauthorized access."
+            },
+            {
+              code: "PR.AC-4",
+              title: "Access permissions management",
+              description: "Access permissions and authorizations are managed, incorporating the principles of least privilege and separation of duties."
+            },
+            {
+              code: "PR.AC-5",
+              title: "Network integrity protection",
+              description: "Network integrity is protected through network segregation, segmentation, and security controls to limit unauthorized lateral movement."
+            },
+            {
+              code: "PR.AC-6",
+              title: "Identity authentication and proofing",
+              description: "Identities are proofed and bound to credentials and asserted in interactions to ensure strong authentication mechanisms."
+            },
+            {
+              code: "PR.AC-7",
+              title: "Wireless access protection",
+              description: "Users, devices, and other assets are authenticated commensurate with the risk of the transaction, particularly for wireless networks."
+            }
+          ]
+        },
+        {
+          id: "pr-at",
+          name: "Awareness and Training (PR.AT)",
+          items: [
+            {
+              code: "PR.AT-1",
+              title: "User cybersecurity awareness",
+              description: "All users are informed and trained on cybersecurity awareness including phishing, social engineering, and secure practices."
+            },
+            {
+              code: "PR.AT-2",
+              title: "Privileged user responsibilities",
+              description: "Privileged users understand their roles and responsibilities regarding cybersecurity, including additional security requirements."
+            },
+            {
+              code: "PR.AT-3",
+              title: "Third-party stakeholder responsibilities",
+              description: "Third-party stakeholders understand their roles and responsibilities in maintaining cybersecurity for the organization."
+            },
+            {
+              code: "PR.AT-4",
+              title: "Senior executive responsibilities",
+              description: "Senior executives understand their roles and responsibilities in maintaining and improving cybersecurity posture."
+            },
+            {
+              code: "PR.AT-5",
+              title: "Security personnel training",
+              description: "Physical and cybersecurity personnel understand their roles and receive specialized training for their security functions."
+            }
+          ]
+        },
+        {
+          id: "pr-ds",
+          name: "Data Security (PR.DS)",
+          items: [
+            {
+              code: "PR.DS-1",
+              title: "Data-at-rest protection",
+              description: "Data-at-rest is protected using encryption, access controls, and secure storage mechanisms to prevent unauthorized access."
+            },
+            {
+              code: "PR.DS-2",
+              title: "Data-in-transit protection",
+              description: "Data-in-transit is protected using encryption protocols like TLS/SSL to secure data moving across networks."
+            },
+            {
+              code: "PR.DS-3",
+              title: "Asset lifecycle management",
+              description: "Assets are formally managed throughout removal, transfers, and disposition to prevent data leakage or unauthorized recovery."
+            },
+            {
+              code: "PR.DS-4",
+              title: "Availability capacity",
+              description: "Adequate capacity to ensure availability is maintained through resource planning, redundancy, and scalability measures."
+            },
+            {
+              code: "PR.DS-5",
+              title: "Data leak protection",
+              description: "Protections against data leaks are implemented using DLP tools, monitoring, and access controls to prevent unauthorized disclosure."
+            },
+            {
+              code: "PR.DS-6",
+              title: "Integrity checking mechanisms",
+              description: "Integrity checking mechanisms are used to verify software, firmware, and information integrity through hashing and digital signatures."
+            },
+            {
+              code: "PR.DS-7",
+              title: "Development environment separation",
+              description: "The development and testing environment is separated from the production environment to prevent accidental impacts."
+            },
+            {
+              code: "PR.DS-8",
+              title: "Hardware integrity mechanisms",
+              description: "Integrity checking mechanisms are used to verify hardware integrity using secure boot and hardware root of trust."
+            }
+          ]
+        },
+        {
+          id: "pr-ip",
+          name: "Information Protection Processes (PR.IP)",
+          items: [
+            {
+              code: "PR.IP-1",
+              title: "Baseline configuration",
+              description: "A baseline configuration of information technology systems is created and maintained incorporating security principles."
+            },
+            {
+              code: "PR.IP-2",
+              title: "System development lifecycle",
+              description: "A System Development Life Cycle to manage systems is implemented with security integrated throughout all phases."
+            },
+            {
+              code: "PR.IP-3",
+              title: "Configuration change control",
+              description: "Configuration change control processes are in place to track, approve, and document changes to systems and assets."
+            },
+            {
+              code: "PR.IP-4",
+              title: "Information backups",
+              description: "Backups of information are conducted, maintained, and tested regularly to ensure data can be restored after incidents."
+            },
+            {
+              code: "PR.IP-5",
+              title: "Physical operating environment policy",
+              description: "Policy and regulations regarding the physical operating environment for organizational assets are met through controls."
+            },
+            {
+              code: "PR.IP-6",
+              title: "Data destruction policy",
+              description: "Data is destroyed according to policy to prevent unauthorized recovery using secure deletion methods."
+            },
+            {
+              code: "PR.IP-7",
+              title: "Protection process improvement",
+              description: "Protection processes are improved through lessons learned and predictive indicators to enhance security posture."
+            },
+            {
+              code: "PR.IP-8",
+              title: "Security technologies effectiveness",
+              description: "Effectiveness of protection technologies is shared to enable organizational learning and improvement."
+            },
+            {
+              code: "PR.IP-9",
+              title: "Response and recovery plans",
+              description: "Response plans and recovery plans are in place and managed to ensure business continuity during incidents."
+            },
+            {
+              code: "PR.IP-10",
+              title: "Response and recovery testing",
+              description: "Response and recovery plans are tested through tabletop exercises and simulations to verify effectiveness."
+            },
+            {
+              code: "PR.IP-11",
+              title: "Cybersecurity in HR practices",
+              description: "Cybersecurity is included in human resources practices including screening, onboarding, and termination procedures."
+            },
+            {
+              code: "PR.IP-12",
+              title: "Vulnerability management plan",
+              description: "A vulnerability management plan is developed and implemented to identify, assess, and remediate vulnerabilities."
+            }
+          ]
+        },
+        {
+          id: "pr-ma",
+          name: "Maintenance (PR.MA)",
+          items: [
+            {
+              code: "PR.MA-1",
+              title: "Maintenance and repair",
+              description: "Maintenance and repair of organizational assets are performed and logged with approved and controlled tools."
+            },
+            {
+              code: "PR.MA-2",
+              title: "Remote maintenance",
+              description: "Remote maintenance of organizational assets is approved, logged, and performed in a manner that prevents unauthorized access."
+            }
+          ]
+        },
+        {
+          id: "pr-pt",
+          name: "Protective Technology (PR.PT)",
+          items: [
+            {
+              code: "PR.PT-1",
+              title: "Audit logs",
+              description: "Audit and log records are determined, documented, implemented, and reviewed in accordance with policy."
+            },
+            {
+              code: "PR.PT-2",
+              title: "Removable media protection",
+              description: "Removable media is protected and its use restricted according to policy through encryption and access controls."
+            },
+            {
+              code: "PR.PT-3",
+              title: "Least functionality principle",
+              description: "The principle of least functionality is incorporated by configuring systems to provide only essential capabilities."
+            },
+            {
+              code: "PR.PT-4",
+              title: "Communication network protection",
+              description: "Communications and control networks are protected using firewalls, IDS/IPS, and network segmentation."
+            },
+            {
+              code: "PR.PT-5",
+              title: "Resilience mechanisms",
+              description: "Mechanisms are implemented to achieve resilience requirements in normal and adverse situations through redundancy."
+            }
+          ]
+        }
+      ]
+    },
+    detect: {
+      title: "DETECT",
+      description: "Develop and implement activities to identify cybersecurity events",
+      icon: Bell,
+      color: "bg-orange-500",
+      gradient: "from-orange-500 to-orange-600",
+      borderColor: "border-orange-500",
+      categories: [
+        {
+          id: "de-ae",
+          name: "Anomalies and Events (DE.AE)",
+          items: [
+            {
+              code: "DE.AE-1",
+              title: "Network baseline",
+              description: "A baseline of network operations and expected data flows is established and managed to detect anomalous activity."
+            },
+            {
+              code: "DE.AE-2",
+              title: "Event analysis",
+              description: "Detected events are analyzed to understand attack targets and methods through log analysis and threat intelligence."
+            },
+            {
+              code: "DE.AE-3",
+              title: "Event correlation",
+              description: "Event data are collected and correlated from multiple sources and sensors using SIEM systems for comprehensive visibility."
+            },
+            {
+              code: "DE.AE-4",
+              title: "Impact determination",
+              description: "Impact of events is determined through damage assessment and business impact analysis to prioritize response efforts."
+            },
+            {
+              code: "DE.AE-5",
+              title: "Incident alert thresholds",
+              description: "Incident alert thresholds are established based on risk assessment to balance detection sensitivity with false positives."
+            }
+          ]
+        },
+        {
+          id: "de-cm",
+          name: "Security Continuous Monitoring (DE.CM)",
+          items: [
+            {
+              code: "DE.CM-1",
+              title: "Network monitoring",
+              description: "The network is monitored to detect potential cybersecurity events using IDS/IPS, netflow analysis, and traffic inspection."
+            },
+            {
+              code: "DE.CM-2",
+              title: "Physical environment monitoring",
+              description: "The physical environment is monitored to detect potential cybersecurity events using cameras, sensors, and access logs."
+            },
+            {
+              code: "DE.CM-3",
+              title: "Personnel activity monitoring",
+              description: "Personnel activity is monitored to detect potential cybersecurity events through user behavior analytics and access reviews."
+            },
+            {
+              code: "DE.CM-4",
+              title: "Malicious code detection",
+              description: "Malicious code is detected using antivirus, anti-malware, EDR solutions, and behavioral analysis tools."
+            },
+            {
+              code: "DE.CM-5",
+              title: "Unauthorized mobile code detection",
+              description: "Unauthorized mobile code is detected through application whitelisting and code signing verification mechanisms."
+            },
+            {
+              code: "DE.CM-6",
+              title: "External service provider monitoring",
+              description: "External service provider activity is monitored to detect potential cybersecurity events through contract provisions and audits."
+            },
+            {
+              code: "DE.CM-7",
+              title: "Unauthorized activity monitoring",
+              description: "Monitoring for unauthorized personnel, connections, devices, and software is performed through NAC and asset management."
+            },
+            {
+              code: "DE.CM-8",
+              title: "Vulnerability scanning",
+              description: "Vulnerability scans are performed regularly to identify weaknesses before they can be exploited by attackers."
+            }
+          ]
+        },
+        {
+          id: "de-dp",
+          name: "Detection Processes (DE.DP)",
+          items: [
+            {
+              code: "DE.DP-1",
+              title: "Detection roles and responsibilities",
+              description: "Roles and responsibilities for detection are well defined to ensure that detection capabilities are maintained."
+            },
+            {
+              code: "DE.DP-2",
+              title: "Detection compliance",
+              description: "Detection activities comply with all applicable requirements including legal, regulatory, and organizational policies."
+            },
+            {
+              code: "DE.DP-3",
+              title: "Detection process testing",
+              description: "Detection processes are tested to ensure effectiveness through red team exercises and detection validation."
+            },
+            {
+              code: "DE.DP-4",
+              title: "Event detection communication",
+              description: "Event detection information is communicated to appropriate parties including SOC teams and management."
+            },
+            {
+              code: "DE.DP-5",
+              title: "Detection process improvement",
+              description: "Detection processes are continuously improved based on lessons learned and threat intelligence updates."
+            }
+          ]
+        }
+      ]
+    },
+    respond: {
+      title: "RESPOND",
+      description: "Develop and implement activities to take action on detected events",
+      icon: Zap,
+      color: "bg-red-500",
+      gradient: "from-red-500 to-red-600",
+      borderColor: "border-red-500",
+      categories: [
+        {
+          id: "rs-rp",
+          name: "Response Planning (RS.RP)",
+          items: [
+            {
+              code: "RS.RP-1",
+              title: "Response plan execution",
+              description: "Response plan is executed during or after an incident to contain damage and restore normal operations quickly."
+            }
+          ]
+        },
+        {
+          id: "rs-co",
+          name: "Communications (RS.CO)",
+          items: [
+            {
+              code: "RS.CO-1",
+              title: "Personnel roles awareness",
+              description: "Personnel know their roles and order of operations when a response is needed through training and documentation."
+            },
+            {
+              code: "RS.CO-2",
+              title: "Incident reporting",
+              description: "Incidents are reported consistent with established criteria to appropriate internal and external stakeholders."
+            },
+            {
+              code: "RS.CO-3",
+              title: "Information sharing",
+              description: "Information is shared with designated stakeholders including law enforcement, regulators, and partners as appropriate."
+            },
+            {
+              code: "RS.CO-4",
+              title: "Stakeholder coordination",
+              description: "Coordination with stakeholders occurs to ensure unified response efforts and information exchange during incidents."
+            },
+            {
+              code: "RS.CO-5",
+              title: "Voluntary information sharing",
+              description: "Voluntary information sharing occurs with external stakeholders to achieve broader cybersecurity situational awareness."
+            }
+          ]
+        },
+        {
+          id: "rs-an",
+          name: "Analysis (RS.AN)",
+          items: [
+            {
+              code: "RS.AN-1",
+              title: "Notification investigation",
+              description: "Notifications from detection systems are investigated to determine if an incident has occurred and its severity."
+            },
+            {
+              code: "RS.AN-2",
+              title: "Impact understanding",
+              description: "The impact of the incident is understood through damage assessment, scope determination, and business impact analysis."
+            },
+            {
+              code: "RS.AN-3",
+              title: "Forensics performed",
+              description: "Forensics are performed to gather evidence, determine root cause, and support potential legal proceedings."
+            },
+            {
+              code: "RS.AN-4",
+              title: "Incident categorization",
+              description: "Incidents are categorized consistent with response plans to ensure appropriate handling procedures are followed."
+            },
+            {
+              code: "RS.AN-5",
+              title: "Vulnerability identification",
+              description: "Processes are established to receive, analyze, and respond to vulnerabilities disclosed to the organization."
+            }
+          ]
+        },
+        {
+          id: "rs-mi",
+          name: "Mitigation (RS.MI)",
+          items: [
+            {
+              code: "RS.MI-1",
+              title: "Incident containment",
+              description: "Incidents are contained to prevent further damage by isolating affected systems and limiting attacker access."
+            },
+            {
+              code: "RS.MI-2",
+              title: "Incident mitigation",
+              description: "Incidents are mitigated through eradication of threats, patching vulnerabilities, and removing attacker persistence mechanisms."
+            },
+            {
+              code: "RS.MI-3",
+              title: "Newly identified vulnerabilities",
+              description: "Newly identified vulnerabilities are mitigated or documented as accepted risks according to organizational risk tolerance."
+            }
+          ]
+        },
+        {
+          id: "rs-im",
+          name: "Improvements (RS.IM)",
+          items: [
+            {
+              code: "RS.IM-1",
+              title: "Response plan lessons learned",
+              description: "Response plans incorporate lessons learned from post-incident reviews and after-action reports."
+            },
+            {
+              code: "RS.IM-2",
+              title: "Response strategy updates",
+              description: "Response strategies are updated based on lessons learned and evolving threats to improve effectiveness."
+            }
+          ]
+        }
+      ]
+    },
+    recover: {
+      title: "RECOVER",
+      description: "Develop and implement activities to restore capabilities after incidents",
+      icon: RefreshCw,
+      color: "bg-purple-500",
+      gradient: "from-purple-500 to-purple-600",
+      borderColor: "border-purple-500",
+      categories: [
+        {
+          id: "rc-rp",
+          name: "Recovery Planning (RC.RP)",
+          items: [
+            {
+              code: "RC.RP-1",
+              title: "Recovery plan execution",
+              description: "Recovery plan is executed during or after a cybersecurity incident to restore normal operations and business functions."
+            }
+          ]
+        },
+        {
+          id: "rc-im",
+          name: "Improvements (RC.IM)",
+          items: [
+            {
+              code: "RC.IM-1",
+              title: "Recovery plan lessons learned",
+              description: "Recovery plans incorporate lessons learned from post-incident analysis to improve future recovery capabilities."
+            },
+            {
+              code: "RC.IM-2",
+              title: "Recovery strategy updates",
+              description: "Recovery strategies are updated based on lessons learned and changing organizational needs to enhance resilience."
+            }
+          ]
+        },
+        {
+          id: "rc-co",
+          name: "Communications (RC.CO)",
+          items: [
+            {
+              code: "RC.CO-1",
+              title: "Public relations management",
+              description: "Public relations are managed to maintain stakeholder confidence and ensure accurate information is communicated."
+            },
+            {
+              code: "RC.CO-2",
+              title: "Reputation repair",
+              description: "Reputation is repaired after an incident through transparency, remediation efforts, and demonstrated improvements."
+            },
+            {
+              code: "RC.CO-3",
+              title: "Recovery activity communication",
+              description: "Recovery activities are communicated to internal and external stakeholders to manage expectations and provide updates."
+            }
+          ]
+        }
+      ]
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 mb-6">
+          <div className="text-center mb-8">
+            <h1 className="text-5xl font-bold text-gray-800 mb-3">
+               NIST Cybersecurity Framework
+            </h1>
+            <p className="text-xl text-gray-600">
+              Five Core Functions for Comprehensive Cyber Risk Management
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {Object.entries(nistData).map(([key, func]) => {
+              const Icon = func.icon;
+              const isExpanded = expandedFunctions[key];
+
+              return (
+                <div
+                  key={key}
+                  className="border-2 border-gray-200 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg"
+                >
+                  <div
+                    onClick={() => toggleFunction(key)}
+                    className={`bg-gradient-to-r ${func.gradient} p-6 cursor-pointer flex items-center justify-between transition-all duration-300 hover:opacity-90`}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="bg-white bg-opacity-20 p-3 rounded-full">
+                        <Icon className="w-8 h-8 text-white" />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-white">
+                          {func.title}
+                        </h2>
+                        <p className="text-white text-opacity-90 text-sm">
+                          {func.description}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="bg-white bg-opacity-20 p-2 rounded-full">
+                      {isExpanded ? (
+                        <ChevronDown className="w-6 h-6 text-white" />
+                      ) : (
+                        <ChevronRight className="w-6 h-6 text-white" />
+                      )}
+                    </div>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="bg-gray-50 p-6">
+                      <div className="space-y-4">
+                        {func.categories.map((category) => {
+                          const isCategoryExpanded = expandedCategories[category.id];
+
+                          return (
+                            <div
+                              key={category.id}
+                              className={`bg-white rounded-lg shadow-md overflow-hidden border-l-4 ${func.borderColor}`}
+                            >
+                              <div
+                                onClick={() => toggleCategory(category.id)}
+                                className="p-4 cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-between"
+                              >
+                                <h3 className="text-lg font-semibold text-gray-800">
+                                  {category.name}
+                                </h3>
+                                <div className="text-gray-400">
+                                  {isCategoryExpanded ? (
+                                    <ChevronDown className="w-5 h-5" />
+                                  ) : (
+                                    <ChevronRight className="w-5 h-5" />
+                                  )}
+                                </div>
+                              </div>
+
+                              {isCategoryExpanded && (
+                                <div className="p-4 pt-0 space-y-3">
+                                  {category.items.map((item, idx) => (
+                                    <div
+                                      key={idx}
+                                      className="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:border-gray-300 transition-colors"
+                                    >
+                                      <div className="flex items-start space-x-3">
+                                        <div className={`${func.color} text-white text-xs font-bold px-2 py-1 rounded flex-shrink-0 mt-0.5`}>
+                                          {item.code}
+                                        </div>
+                                        <div className="flex-1">
+                                          <h4 className="font-semibold text-gray-800 mb-2">
+                                            {item.title}
+                                          </h4>
+                                          <p className="text-gray-600 text-sm leading-relaxed">
+                                            {item.description}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="text-center text-white text-sm opacity-80">
+          <p>An Understanding version of NIST Framework by @ Harshith Madhavaram </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<NISTFramework />);
+    </script>
+</body>
+</html>
